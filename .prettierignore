@@ -1,0 +1,15 @@
+node_modules/
+artifacts/
+cache/
+coverage/
+typechain-types/
+dist/
+build/
+*.log
+*.pid
+*.seed
+.env
+.env.local
+.env.production
+deployments/
+gas-report.txt

@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Hardhat files
+cache/
+artifacts/
+typechain-types/
+
+# Coverage reports
+coverage/
+coverage.json
+.coverage_artifacts/
+.coverage_cache/
+.coverage_contracts/
+
+# Gas reports
+gas-report.txt
+
+# Deployment files (optional - you may want to track these)
+deployments/
+*.deployment.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build files
+dist/
+build/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Test files
+.testresults/
+
+# Hardhat specific
+.openzeppelin/
+deployments/localhost/
+
+# Misc
+*.seed
+*.pid
+*.pid.lock

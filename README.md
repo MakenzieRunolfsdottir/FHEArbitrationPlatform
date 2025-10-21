@@ -1,6 +1,6 @@
 # FHE Anonymous Arbitration Platform
 
-[![Test Suite](https://github.com/MakenzieRunolfsdottir/FHEArbitrationPlatform/actions/workflows/test.yml/badge.svg)](https://github.com/MakenzieRunolfsdottir/FHEArbitrationPlatform/actions/workflows/test.yml)
+
 [![codecov](https://codecov.io/gh/MakenzieRunolfsdottir/FHEArbitrationPlatform/branch/main/graph/badge.svg)](https://codecov.io/gh/MakenzieRunolfsdottir/FHEArbitrationPlatform)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org)

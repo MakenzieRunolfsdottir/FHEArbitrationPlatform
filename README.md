@@ -24,7 +24,7 @@ A decentralized privacy-preserving dispute resolution platform built on blockcha
 - [Scripts](#scripts)
 - [Contract Interaction](#contract-interaction)
 - [Deployment Information](#deployment-information)
-- [Demo Video](#demo-video)
+- [Demo Video demo.mp4]
 - [Security Considerations](#security-considerations)
 - [Contributing](#contributing)
 - [License](#license)

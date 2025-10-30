@@ -9,12 +9,50 @@
 
 A decentralized privacy-preserving dispute resolution platform built on blockchain technology with Fully Homomorphic Encryption (FHE), enabling anonymous arbitration decisions while maintaining transparency and fairness.
 
+## 🚀 Quick Start
+
+### Try the Live Demo
+👉 **Visit**: https://fhe-arbitration-platform.vercel.app/
+
+### Run Locally (Frontend)
+
+```bash
+# Clone and navigate
+git clone https://github.com/MakenzieRunolfsdottir/FHEArbitrationPlatform.git
+cd FHEArbitrationPlatform/nextjs-arbitration
+
+# Install and configure
+npm install
+cp .env.example .env.local
+# Edit .env.local with your RPC URL and contract address
+
+# Start development server
+npm run dev
+# Open http://localhost:3000
+```
+
+### Deploy Smart Contract
+
+```bash
+# Install dependencies
+npm install
+
+# Configure environment
+cp .env.example .env
+# Add your PRIVATE_KEY and SEPOLIA_RPC_URL to .env
+
+# Deploy to Sepolia
+npm run deploy:sepolia
+```
+
 ## 📋 Table of Contents
 
+- [Quick Start](#quick-start)
 - [Overview](#overview)
 - [Core Concepts](#core-concepts)
 - [Features](#features)
 - [Technology Stack](#technology-stack)
+- [Frontend Application Architecture](#frontend-application-architecture)
 - [Smart Contract Architecture](#smart-contract-architecture)
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -24,9 +62,10 @@ A decentralized privacy-preserving dispute resolution platform built on blockcha
 - [Scripts](#scripts)
 - [Contract Interaction](#contract-interaction)
 - [Deployment Information](#deployment-information)
-- [Demo Video demo.mp4]
+- [Demo Video](#demo-video)
 - [Security Considerations](#security-considerations)
 - [Contributing](#contributing)
+- [Roadmap](#roadmap)
 - [License](#license)
 
 ## 🌐 Overview
@@ -191,6 +230,26 @@ euint32 encryptedIdentityProof;    // Encrypted arbitrator credentials
 - **Hardhat**: Development framework v2.19.4
 - **Ethers.js**: ^6.9.0
 - **FHE Types**: euint8, euint32 for encrypted computations
+- **FHEVM SDK**: `@fhevm/sdk` (workspace) - Universal SDK for FHE operations
+
+### Frontend Technologies
+
+#### Next.js Application (nextjs-arbitration)
+
+- **Next.js**: ^14.0.4 - React framework with App Router and Pages Router support
+- **React**: ^18.2.0 - UI library for building interactive interfaces
+- **TypeScript**: ^5.3.3 - Type-safe development
+- **Tailwind CSS**: ^3.4.0 - Utility-first CSS framework
+- **PostCSS**: ^8.4.32 - CSS processing
+- **Autoprefixer**: ^10.4.16 - CSS vendor prefixing
+
+#### FHEVM SDK Integration
+
+- **@fhevm/sdk**: Workspace package for encrypted operations
+- **FhevmProvider**: React context for SDK state management
+- **useFhevm**: Custom hook for FHE operations
+- **Encrypted Input Builder**: Fluent API for encryption
+- **EIP-712 Signatures**: User authentication for decryption
 
 ### Development Tools
 
@@ -199,12 +258,157 @@ euint32 encryptedIdentityProof;    // Encrypted arbitrator credentials
 - **Chai**: Testing framework
 - **Solidity Coverage**: Code coverage reporting
 - **Hardhat Gas Reporter**: Gas optimization tracking
+- **ESLint**: ^8.56.0 - Code quality and security
+- **eslint-config-next**: ^14.0.4 - Next.js specific linting
 
 ### Networks
 
-- **Sepolia Testnet**: Testing and development
+- **Sepolia Testnet**: Testing and development (Chain ID: 11155111)
 - **Ethereum Mainnet**: Production deployment
 - **Local Hardhat Network**: Local testing
+- **Vercel Deployment**: Next.js application hosting
+
+## 🎨 Frontend Application Architecture
+
+### Next.js Arbitration Platform (`nextjs-arbitration/`)
+
+A modern, production-ready Next.js application showcasing the FHEVM SDK with anonymous arbitration functionality.
+
+#### Project Structure
+
+```
+nextjs-arbitration/
+├── pages/
+│   ├── _app.tsx              # App wrapper with FhevmProvider
+│   └── index.tsx             # Main arbitration interface
+├── components/
+│   ├── WalletConnect.tsx     # MetaMask wallet integration
+│   ├── DisputeForm.tsx       # Encrypted dispute submission
+│   └── DisputeList.tsx       # Active disputes and voting
+├── lib/                      # Utility functions and helpers
+├── styles/
+│   └── globals.css           # Tailwind CSS global styles
+├── .env.example              # Environment configuration template
+└── package.json              # Dependencies and scripts
+```
+
+#### Key Features
+
+- 🔒 **Fully Encrypted Voting**: All votes encrypted using FHEVM SDK
+- 🎭 **Anonymous Disputes**: Privacy-preserving dispute resolution
+- ⚡ **Real-time Updates**: Live dispute tracking and status
+- 🎨 **Modern UI**: Responsive design with Tailwind CSS
+- 📱 **Mobile Responsive**: Works seamlessly on all devices
+- 🔗 **Wallet Integration**: MetaMask connection and management
+
+#### FHEVM SDK Integration Pattern
+
+**1. Provider Setup (`pages/_app.tsx`)**
+```typescript
+import { FhevmProvider } from '@fhevm/sdk';
+
+const config = {
+  network: {
+    chainId: 11155111,
+    name: 'sepolia',
+    rpcUrl: process.env.NEXT_PUBLIC_RPC_URL
+  }
+};
+
+export default function App({ Component, pageProps }) {
+  return (
+    <FhevmProvider config={config}>
+      <Component {...pageProps} />
+    </FhevmProvider>
+  );
+}
+```
+
+**2. Using SDK Hooks**
+```typescript
+import { useFhevm } from '@fhevm/sdk';
+
+function DisputeForm() {
+  const { createEncryptedInput, getContract } = useFhevm();
+
+  // Encrypt dispute category
+  const encrypted = await createEncryptedInput(contractAddress, userAddress)
+    .add8(categoryValue)
+    .encrypt();
+
+  // Submit to contract
+  await contract.submitDispute(
+    encrypted.handles[0],
+    encrypted.inputProof
+  );
+}
+```
+
+**3. Environment Configuration**
+
+Required environment variables in `.env.local`:
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `NEXT_PUBLIC_RPC_URL` | Ethereum RPC endpoint | `https://sepolia.infura.io/v3/...` |
+| `NEXT_PUBLIC_CHAIN_ID` | Network chain ID | `11155111` |
+| `NEXT_PUBLIC_CONTRACT_ADDRESS` | Deployed contract address | `0x0194870...` |
+
+#### Running the Frontend
+
+```bash
+# Navigate to Next.js app
+cd nextjs-arbitration
+
+# Install dependencies
+npm install
+
+# Copy environment file
+cp .env.example .env.local
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+#### Component Breakdown
+
+**WalletConnect Component**
+- MetaMask detection and connection
+- Network validation (Sepolia)
+- Account management
+- FHEVM SDK initialization on connection
+
+**DisputeForm Component**
+- Form validation
+- Category encryption using SDK
+- Transaction handling
+- User feedback (loading states, errors)
+
+**DisputeList Component**
+- Dispute listing and filtering
+- Encrypted voting interface
+- Status tracking (pending, voting, resolved)
+- Real-time updates
+
+#### Deployment
+
+The Next.js application can be deployed to:
+- **Vercel**: Recommended (official Next.js platform)
+- **Netlify**: Static site generation
+- **AWS Amplify**: Full-stack deployment
+- **Docker**: Containerized deployment
+
+```bash
+# Deploy to Vercel
+npm install -g vercel
+vercel
+```
 
 ## 📐 Smart Contract Architecture
 
@@ -277,8 +481,11 @@ struct VoteRecord {
 - Node.js >= 18.0.0
 - npm >= 9.0.0
 - Git
+- MetaMask browser extension (for frontend)
 
 ### Setup
+
+#### Backend (Smart Contracts)
 
 ```bash
 # Clone the repository
@@ -293,6 +500,37 @@ cp .env.example .env
 
 # Edit .env with your configuration
 # Add your private key, RPC URLs, and API keys
+```
+
+#### Frontend (Next.js Application)
+
+```bash
+# Navigate to Next.js application
+cd nextjs-arbitration
+
+# Install frontend dependencies
+npm install
+
+# Copy frontend environment file
+cp .env.example .env.local
+
+# Edit .env.local with your configuration
+# NEXT_PUBLIC_RPC_URL=https://sepolia.infura.io/v3/your-api-key
+# NEXT_PUBLIC_CHAIN_ID=11155111
+# NEXT_PUBLIC_CONTRACT_ADDRESS=0x019487001FaCC26883f8760b72B0DAef2cbFa1bd
+```
+
+#### Monorepo Setup (Full Stack)
+
+```bash
+# Install all dependencies (root + all workspaces)
+npm run install:all
+
+# Build everything
+npm run build
+
+# Run frontend development server
+cd nextjs-arbitration && npm run dev
 ```
 
 ## ⚙️ Configuration
@@ -521,6 +759,8 @@ npm run format:check && npm run lint && npm run eslint && npm test
 
 ## 📜 Scripts
 
+### Backend Scripts
+
 The platform includes four essential scripts for contract interaction:
 
 ### 1. Deploy Script (`scripts/deploy.js`)
@@ -590,6 +830,33 @@ npm run simulate:sepolia  # Sepolia testnet
 3. Demonstrates arbitrator assignment
 4. Shows platform statistics
 5. Displays reputation scores
+
+### Frontend Scripts
+
+For the Next.js application (`nextjs-arbitration/`):
+
+```bash
+# Development
+npm run dev              # Start development server (http://localhost:3000)
+
+# Production
+npm run build            # Build optimized production bundle
+npm start                # Start production server
+
+# Quality Checks
+npm run lint             # Run Next.js linting
+npm run type-check       # TypeScript type checking
+```
+
+**Available Scripts:**
+
+| Script | Command | Description |
+|--------|---------|-------------|
+| `dev` | `next dev` | Start development server with hot reload |
+| `build` | `next build` | Build optimized production bundle |
+| `start` | `next start` | Serve production build |
+| `lint` | `next lint` | Run ESLint for Next.js |
+| `type-check` | `tsc --noEmit` | Verify TypeScript types |
 
 ## 📡 Contract Interaction
 
@@ -797,7 +1064,7 @@ For questions, issues, or suggestions:
 
 ## 🎯 Roadmap
 
-### Phase 1: Core Platform (Completed)
+### Phase 1: Core Platform (Completed ✅)
 - ✅ Basic dispute creation and management
 - ✅ Arbitrator registration system
 - ✅ Reputation tracking
@@ -805,26 +1072,46 @@ For questions, issues, or suggestions:
 - ✅ Comprehensive testing (78+ tests)
 - ✅ CI/CD pipeline with security checks
 - ✅ Gas optimization (800 runs, viaIR)
+- ✅ **Next.js frontend application with FHEVM SDK**
+- ✅ **Tailwind CSS responsive UI design**
+- ✅ **MetaMask wallet integration**
+- ✅ **TypeScript full-stack implementation**
 
-### Phase 2: FHE Integration (In Progress)
-- 🔄 Zama fhEVM integration
+### Phase 2: FHE Integration (In Progress 🔄)
+- ✅ **FHEVM SDK integration (@fhevm/sdk)**
+- ✅ **FhevmProvider React context pattern**
+- ✅ **Encrypted input builder with fluent API**
+- 🔄 Zama fhEVM production integration
 - 🔄 Production-grade encryption
 - 🔄 Gateway callback implementation
 - 🔄 Enhanced privacy features
 
-### Phase 3: Advanced Features (Planned)
+### Phase 3: Frontend Enhancement (In Progress 🔄)
+- ✅ **Next.js 14 with App Router and Pages Router**
+- ✅ **Component-based architecture (WalletConnect, DisputeForm, DisputeList)**
+- ✅ **Real-time UI updates and status tracking**
+- 🔄 Enhanced UX with loading states and error handling
+- 📋 Admin dashboard for platform management
+- 📋 Arbitrator analytics and performance metrics
+- 📋 Mobile-optimized responsive design
+- 📋 PWA (Progressive Web App) support
+
+### Phase 4: Advanced Features (Planned 📋)
 - 📋 Chainlink VRF for random selection
 - 📋 Multi-token support for stakes
 - 📋 Appeal mechanism
 - 📋 Arbitrator training system
 - 📋 Advanced reputation algorithms
+- 📋 Multi-language support (i18n)
+- 📋 Dark mode theme toggle
 
-### Phase 4: Production Launch (Planned)
+### Phase 5: Production Launch (Planned 📋)
 - 📋 Security audit by reputable firm
 - 📋 Mainnet deployment
-- 📋 Enhanced frontend application
-- 📋 Mobile application
+- 📋 Mobile application (React Native)
 - 📋 API for third-party integrations
+- 📋 GraphQL API for complex queries
+- 📋 WebSocket for real-time notifications
 
 ---
 

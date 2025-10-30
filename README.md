@@ -9,10 +9,14 @@
 
 A decentralized privacy-preserving dispute resolution platform built on blockchain technology with Fully Homomorphic Encryption (FHE), enabling anonymous arbitration decisions while maintaining transparency and fairness.
 
-## 🚀 Quick Start
+## 🌐 Overview
+
+The FHE Anonymous Arbitration Platform revolutionizes dispute resolution by leveraging **Fully Homomorphic Encryption (FHE)** to enable completely private and anonymous arbitration processes. The platform ensures that sensitive dispute evidence and arbitrator votes remain encrypted throughout the entire process, only revealing the final decision.
 
 ### Try the Live Demo
-👉 **Visit**: https://fhe-arbitration-platform.vercel.app/
+👉 **Visit**: https://fhe-arbitration-platform.vercel.app/   demo.mp4
+
+## 🚀 Quick Start
 
 ### Run Locally (Frontend)
 
@@ -68,13 +72,8 @@ npm run deploy:sepolia
 - [Roadmap](#roadmap)
 - [License](#license)
 
-## 🌐 Overview
 
-The FHE Anonymous Arbitration Platform revolutionizes dispute resolution by leveraging **Fully Homomorphic Encryption (FHE)** to enable completely private and anonymous arbitration processes. The platform ensures that sensitive dispute evidence and arbitrator votes remain encrypted throughout the entire process, only revealing the final decision.
 
-**Live Demo**: https://fhe-arbitration-platform.vercel.app/  demo.mp4
-
-**GitHub Repository**: https://github.com/MakenzieRunolfsdottir/FHEArbitrationPlatform
 
 ## 🎯 Core Concepts
 

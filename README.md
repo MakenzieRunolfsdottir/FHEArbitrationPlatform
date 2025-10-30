@@ -72,7 +72,7 @@ npm run deploy:sepolia
 
 The FHE Anonymous Arbitration Platform revolutionizes dispute resolution by leveraging **Fully Homomorphic Encryption (FHE)** to enable completely private and anonymous arbitration processes. The platform ensures that sensitive dispute evidence and arbitrator votes remain encrypted throughout the entire process, only revealing the final decision.
 
-**Live Demo**: https://fhe-arbitration-platform.vercel.app/
+**Live Demo**: https://fhe-arbitration-platform.vercel.app/  demo.mp4
 
 **GitHub Repository**: https://github.com/MakenzieRunolfsdottir/FHEArbitrationPlatform
 
